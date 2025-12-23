@@ -23,6 +23,7 @@ class BACKTEST(SMA) :
         }
 
         self.df = self.construct_df(symbol , interval)
+
         self.strategy = strategy
 
         self.capital : int= capital 
@@ -42,6 +43,7 @@ class BACKTEST(SMA) :
         stock_data : str = self.get_stock_data(symbol , interval)
 
         df : DataFrame = pd.read_csv(StringIO(stock_data))
+        if ('close' not in df.columns or 'open' not in df.columns) : raise ValueError(f'Didndt received full data , {df.columns}')
 
         # * Standardize the columns
         df.columns = [col.lower() for col in df.columns]
@@ -65,6 +67,12 @@ class BACKTEST(SMA) :
         response: Response = requests.get('https://www.alphavantage.co/query' , params = {
             'function' : function , 'symbol' : symbol , 'interval' : interval , 'apikey' : os.environ['API_KEY'] , 'datatype' : datatype
         })
+
+        if response.status_code != 200 : 
+
+            print(response.status_code , response.json())
+
+            raise ValueError('Could not retreive value of stock')
 
         return response.text
 
@@ -175,8 +183,9 @@ class BACKTEST(SMA) :
             return {
                 "starting_capital" : self.capital , 
                 "total_net_profit_loss" : round(total_net_pnl ,  2) , 
-                "percentage_return" : f"{round(roi_percentage ,  2)}%" , 
-                "trade_count" : len(trades)
+                "percentage_return" : round(roi_percentage ,  2) , 
+                "trade_count" : len(trades) , 
+                'detailed_net_profit_loss' : results_df['Net PnL'].tolist()
             }
         
         return {"message" : "No trades generated"}

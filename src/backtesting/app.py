@@ -50,7 +50,6 @@ app.add_middleware(
 async def backetest(request : Request) : 
 
     data = await request.json()
-    print(data)
 
     if ('symbol' not in data or 'interval' not in data or 'parameters' not in data or 'strategy' not in data) : raise HTTPException(status_code = 400 , detail = '"symbol" or "interval" was not provided')
 
