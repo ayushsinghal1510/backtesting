@@ -8,7 +8,7 @@ class StochasticOscillator():
         self.smooth_k : int = smooth_k
         self.smooth_d : int = smooth_d
     
-    def add_stochastic(self , df : DataFrame) -> DataFrame : 
+    def add_stochastic_oscillator(self , df : DataFrame) -> DataFrame : 
 
         if not all(col in df.columns for col in ['high' , 'low' , 'prev_close']) : 
             raise ValueError('high, low, and prev_close required in df')
@@ -24,6 +24,6 @@ class StochasticOscillator():
     
     def __call__(self , df) -> DataFrame : 
 
-        df = self.add_stochastic(df)
+        df = self.add_stochastic_oscillator(df)
 
         return df

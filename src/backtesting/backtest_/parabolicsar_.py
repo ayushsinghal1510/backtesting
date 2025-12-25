@@ -8,7 +8,7 @@ class ParabolicSAR() :
         self.af_increment : float = af_increment
         self.af_max : float = af_max
     
-    def add_psar(self , df : DataFrame) -> DataFrame : 
+    def add_parabolic_sar(self , df : DataFrame) -> DataFrame : 
 
         if not all(col in df.columns for col in ['high' , 'low']) : 
             raise ValueError('high and low required in df')
@@ -74,6 +74,6 @@ class ParabolicSAR() :
     
     def __call__(self , df) -> DataFrame : 
 
-        df = self.add_psar(df)
+        df = self.add_parabolic_sar(df)
 
         return df

@@ -6,7 +6,7 @@ class FibonacciRetracement() :
 
         self.period : int = period
     
-    def add_fibonacci(self , df : DataFrame) -> DataFrame : 
+    def add_fibonacci_retracement(self , df : DataFrame) -> DataFrame : 
 
         if not all(col in df.columns for col in ['high' , 'low']) : 
             raise ValueError('high and low required in df')
@@ -27,6 +27,6 @@ class FibonacciRetracement() :
     
     def __call__(self , df) -> DataFrame : 
 
-        df = self.add_fibonacci(df)
+        df = self.add_fibonacci_retracement(df)
 
         return df

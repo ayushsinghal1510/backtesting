@@ -7,9 +7,26 @@ import pandas as pd
 from requests import Response
 import requests
 
-from .sma_ import SMA
+from .adx_ import ADX 
+from .atr_ import ATR
+from .bollingerbands_ import BollingerBands
+from .cci_ import CCI 
+from .ema_ import EMA 
+from .fibonacciretracement_ import FibonacciRetracement
+from .macd_ import MACD 
+from .mfi_ import MFI 
+from .obv_ import OBV 
+from .parabolicsar_ import ParabolicSAR
+from .pivotpoints_ import PivotPoints
+from .roc_ import ROC 
+from .rsi_ import RSI 
+from .sma_ import SMA 
+from .standarddeviation_ import StandardDeviation 
+from .stochasticoscillator_ import StochasticOscillator
+from .volumema_ import VolumeMA
+from .vwap_ import VWAP
 
-class BACKTEST(SMA) : 
+class BACKTEST(ADX , ATR , BollingerBands , CCI , EMA , FibonacciRetracement , MACD , MFI , OBV , ParabolicSAR , PivotPoints , ROC , RSI , SMA , StandardDeviation , StochasticOscillator , VolumeMA , VWAP) : 
 
     def __init__(self , symbol : str , interval : str , parameters : dict , strategy : dict , capital : int = 1_00_000 , slippage_pct : float = 0.0005 , brokerage_per_trade : int = 20 , tax_pct : float = 0.001) -> None : 
 
@@ -32,11 +49,113 @@ class BACKTEST(SMA) :
         self.tax_pct : float = tax_pct
         self.parameters = parameters 
 
+        if 'adx' in self.parameters : 
+
+            ADX.__init__(self , **self.parameters['adx'])
+
+            self.df = self.add_adx(self.df)
+
+        if 'atr' in self.parameters :
+
+            ATR.__init__(self , **self.parameters['atr'])
+
+            self.df = self.add_atr(self.df)
+
+        if 'bollingerbands' in self.parameters :
+
+            BollingerBands.__init__(self , **self.parameters['bollingerbands'])
+
+            self.df = self.add_bollinger_bands(self.df)
+
+        if 'cci' in self.parameters :
+
+            CCI.__init__(self , **self.parameters['cci'])
+
+            self.df = self.add_cci(self.df)
+
+        if 'ema' in self.parameters :
+
+            EMA.__init__(self , **self.parameters['ema'])
+
+            self.df = self.add_ema(self.df)
+
+        if 'fibonacciretracement' in self.parameters : 
+
+            FibonacciRetracement.__init__(self , **self.parameters['fibonacciretracement'])
+
+            self.df = self.add_fibonacci_retracement(self.df)
+
+        if 'macd' in self.parameters : 
+
+            MACD.__init__(self , **self.parameters['macd'])
+
+            self.df = self.add_macd(self.df)
+
+        if 'mfi' in self.parameters : 
+
+            MFI.__init__(self , **self.parameters['mfi'])
+
+            self.df = self.add_mfi(self.df)
+
+        if 'obv' in self.parameters :
+
+            OBV.__init__(self , **self.parameters['obv'])
+
+            self.df = self.add_obv(self.df)
+
+        if 'parabolicsar' in self.parameters : 
+
+            ParabolicSAR.__init__(self , **self.parameters['parabolicsar'])
+
+            self.df = self.add_parabolic_sar(self.df)
+
+        if 'pivotpoints' in self.parameters : 
+
+            PivotPoints.__init__(self , **self.parameters['pivotpoints'])
+
+            self.df = self.add_pivot_points(self.df)
+
+        if 'roc' in self.parameters : 
+
+            ROC.__init__(self , **self.parameters['roc'])
+
+            self.df = self.add_roc(self.df)
+
+        if 'rsi' in self.parameters :
+             
+            RSI.__init__(self , **self.parameters['rsi'])
+
+            self.df = self.add_rsi(self.df)
+
         if 'sma' in self.parameters : 
 
             SMA.__init__(self , **self.parameters['sma'])
 
             self.df = self.add_sma(self.df)
+
+        if 'standarddeviation' in self.parameters : 
+
+            StandardDeviation.__init__(self , **self.parameters['standarddeviation'])
+
+            self.df = self.add_standard_deviation(self.df)
+
+        if 'stochasticoscillator' in self.parameters : 
+
+            StochasticOscillator.__init__(self , **self.parameters['stochasticoscillator'])
+
+            self.df = self.add_stochastic_oscillator(self.df)
+
+        if 'volumema' in self.parameters : 
+
+            VolumeMA.__init__(self , **self.parameters['volumema'])
+
+            self.df = self.add_volume_ma(self.df)
+
+        if 'vwap' in self.parameters :
+
+            VWAP.__init__(self , **self.parameters['vwap'])
+
+            self.df = self.add_vwap(self.df)
 
     def construct_df(self , symbol : str , interval : str) -> DataFrame : 
 

@@ -6,7 +6,7 @@ class StandardDeviation() :
 
         self.period : int = period
     
-    def add_std(self , df : DataFrame) -> DataFrame : 
+    def add_standard_deviation(self , df : DataFrame) -> DataFrame : 
 
         if 'prev_close' not in df.columns : 
             raise ValueError('prev_close not found in df')
@@ -17,6 +17,6 @@ class StandardDeviation() :
     
     def __call__(self , df) -> DataFrame : 
 
-        df = self.add_std(df)
+        df = self.add_standard_deviation(df)
 
         return df
