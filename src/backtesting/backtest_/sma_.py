@@ -4,7 +4,7 @@ class SMA() :
 
     def __init__(self , rolling_window : int = 20 , **kwargs) -> None : 
 
-        self.rolling_window = rolling_window
+        self.rolling_window : int = rolling_window
 
     def add_sma(self , df : DataFrame) -> DataFrame : 
 
